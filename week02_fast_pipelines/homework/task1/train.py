@@ -1,3 +1,5 @@
+import argparse
+
 import torch
 from torch import nn
 from torch.amp import autocast
@@ -118,3 +120,10 @@ def train(mode: str = "dynamic"):
             device=device, mode=mode, scaler=scaler,
             loss_scale_state=loss_scale_state,
         )
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--mode", choices=["static", "dynamic", "debug"], default="dynamic")
+    args = parser.parse_args()
+    train(mode=args.mode)
